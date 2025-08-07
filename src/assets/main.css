@@ -36,3 +36,97 @@ body {
   transform: translateX(20px);
   opacity: 0;
 }
+
+/* чекбокс и радио */
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  width: max-content;
+  gap: 8px;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #dfdee3;
+  border-radius: 4px;
+  background-color: #fff;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.checkbox-input:checked + .checkbox-box {
+  background-color: #107fd1;
+  border-color: #107fd1;
+}
+
+.checkbox-input:checked + .checkbox-box::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 1px;
+  width: 6px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-text {
+  color: #05263f;
+  font-size: 14px;
+}
+
+/* radio кастом */
+
+.custom-radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-radio input[type='radio'] {
+  display: none;
+}
+
+.custom-radio-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c6c6c6;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.custom-radio input[type='radio']:checked + .custom-radio-box {
+  border-color: #107fd1;
+  background-color: #107fd1;
+}
+
+.custom-radio input[type='radio']:checked + .custom-radio-box::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.custom-radio-label {
+  color: #0a2540;
+  font-size: 15px;
+}

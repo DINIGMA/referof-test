@@ -1,5 +1,9 @@
 <template>
-  <div class="datetime-section date-section" @click="openDatePicker">
+  <div
+    class="datetime-section date-section"
+    :class="[{ 'has-error': errors?.length > 0 }]"
+    @click="openDatePicker"
+  >
     <img :src="CalendarIcon" alt="" class="input-icon" />
     <div class="text-group">
       <div class="label">Дата</div>
@@ -13,8 +17,15 @@
 import { ref, computed } from 'vue'
 import CalendarIcon from '@/assets/icons/calendar.svg'
 
+interface Props {
+  errors?: string[]
+}
+
+withDefaults(defineProps<Props>(), {
+  errors: () => [],
+})
+
 const dateValue = ref('')
-const timeValue = ref('')
 
 const formattedDate = computed(() => {
   if (!dateValue.value) return ''
@@ -23,7 +34,6 @@ const formattedDate = computed(() => {
 })
 
 const dateInput = ref<HTMLInputElement | null>(null)
-const timeInput = ref<HTMLInputElement | null>(null)
 
 function openDatePicker() {
   dateInput.value?.showPicker?.() || dateInput.value?.focus()
@@ -35,6 +45,7 @@ function openDatePicker() {
   position: relative;
   background: #f0f0f0;
   border-radius: 12px;
+  border: 1px solid #f0f0f0;
   padding: 6px 21px 5px 12px;
   cursor: pointer;
   user-select: none;
@@ -98,5 +109,9 @@ function openDatePicker() {
   top: 0;
   border: none;
   background: transparent;
+}
+
+.has-error {
+  border-color: #ff3b30;
 }
 </style>

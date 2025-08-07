@@ -1,7 +1,7 @@
 <template>
   <Form keep-values :validation-schema="schema" @submit="onSubmit">
     <div class="promo-modal__block-form">
-      <label class="promo-modal__input-label" for="name">Название промокода<span>*</span></label>
+      <label class="promo-modal__subtitle" for="name">Название промокода<span>*</span></label>
       <Field
         name="name"
         v-slot="{ field, errors }"
@@ -23,7 +23,7 @@
     </div>
 
     <div class="promo-modal__block-form">
-      <label class="promo-modal__input-label" for="title">Заголовок<span>*</span></label>
+      <label class="promo-modal__subtitle" for="title">Заголовок<span>*</span></label>
       <Field
         name="title"
         v-slot="{ field, errors }"
@@ -44,7 +44,7 @@
     </div>
 
     <div class="promo-modal__block-form">
-      <label class="promo-modal__input-label" for="desc">Сопроводительный текст</label>
+      <label class="promo-modal__subtitle" for="desc">Сопроводительный текст</label>
       <Field
         name="desc"
         v-slot="{ field, errors }"
@@ -65,12 +65,12 @@
     </div>
 
     <div class="promo-modal__block-form promo-modal__block-form--last">
-      <label class="promo-modal__input-label" for="points"
+      <label class="promo-modal__subtitle" for="points"
         >Укажи количество баллов<span>*</span></label
       >
       <Field
         name="points"
-        v-slot="{ field }"
+        v-slot="{ field, errors }"
         :validate-on-blur="false"
         :validate-on-change="false"
         :validate-on-input="false"
@@ -81,6 +81,7 @@
           :placeholder="'100'"
           :autocomplete="'off'"
           :icon="refIcon"
+          :errors="errors"
         ></DefaultInput>
       </Field>
       <ErrorMessage name="points" class="promo-modal__error-message"></ErrorMessage>
@@ -107,6 +108,7 @@ const emits = defineEmits<{
   (e: 'prev-step'): void
 }>()
 
+// схема валидации
 const schema = object({
   name: string().required('Поле обязательно!').max(30, 'Максимальное число символов - 30!'),
   title: string().required('Поле обязательно!').max(120, 'Максимальное число символов - 120!'),
@@ -115,7 +117,13 @@ const schema = object({
 })
 
 function onSubmit(values: any) {
-  emits('next-step', values)
+  const { desc, ...rest } = values
+
+  if (desc) {
+    emits('next-step', values)
+  } else {
+    emits('next-step', { ...rest })
+  }
 }
 </script>
 
@@ -124,18 +132,18 @@ function onSubmit(values: any) {
   margin-bottom: 1rem;
 }
 
-.promo-modal__input-label {
+.promo-modal__subtitle {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
   color: #1c1c1e;
+}
+
+.promo-modal__subtitle span {
+  color: #ff3b30;
 }
 
 .promo-modal__block-form--last {
   margin-bottom: 20px;
-}
-
-.promo-modal__input-label span {
-  color: #ff3b30;
 }
 
 .promo-modal__buttons {

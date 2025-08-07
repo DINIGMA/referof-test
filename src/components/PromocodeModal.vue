@@ -37,7 +37,7 @@ import CloseIcon from './UI-components/icons/CloseIcon.vue'
 import PromocodeStepOne from './PromocodeStepOne.vue'
 import PromocodeStepTwo from './PromocodeStepTwo.vue'
 
-defineEmits<{
+const emits = defineEmits<{
   (e: 'close-modal'): void
 }>()
 
@@ -52,9 +52,19 @@ const currentStepComponent = computed(() =>
 
 // добавить тип
 const nextStep = (data: any) => {
-  console.log(data)
-  formStepOneData.value = data
-  step.value = 2
+  if (step.value === 1) {
+    formStepOneData.value = data
+    step.value = 2
+  } else if (step.value === 2) {
+    formStepTwoData.value = data
+
+    console.log('Данные формы', {
+      ...formStepOneData.value,
+      ...formStepTwoData.value,
+    })
+
+    emits('close-modal')
+  }
 }
 
 const prevStep = () => {

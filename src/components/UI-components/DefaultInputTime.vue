@@ -1,5 +1,9 @@
 <template>
-  <div class="datetime-section time-section" @click="openTimePicker">
+  <div
+    @click="openTimePicker"
+    class="datetime-section time-section"
+    :class="[{ 'has-error': errors?.length > 0 }]"
+  >
     <div class="text-group time-text">
       <div class="value">{{ timeValue || '—' }}</div>
     </div>
@@ -11,6 +15,14 @@
 import { ref, computed } from 'vue'
 
 const timeValue = ref('')
+
+interface Props {
+  errors?: string[]
+}
+
+withDefaults(defineProps<Props>(), {
+  errors: () => [],
+})
 
 const timeInput = ref<HTMLInputElement | null>(null)
 
@@ -24,6 +36,7 @@ function openTimePicker() {
   position: relative;
   background: #f0f0f0;
   border-radius: 12px;
+  border: 1px solid #f0f0f0;
   padding: 6px 21px 5px 12px;
   cursor: pointer;
   user-select: none;
@@ -81,5 +94,9 @@ function openTimePicker() {
   top: 0;
   border: none;
   background: transparent;
+}
+
+.has-error {
+  border-color: #ff3b30;
 }
 </style>
