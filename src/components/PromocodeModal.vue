@@ -50,7 +50,6 @@ const currentStepComponent = computed(() =>
   step.value === 1 ? PromocodeStepOne : PromocodeStepTwo,
 )
 
-// добавить тип
 const nextStep = (data: any) => {
   if (step.value === 1) {
     formStepOneData.value = data
