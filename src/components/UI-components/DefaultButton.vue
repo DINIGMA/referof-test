@@ -27,7 +27,6 @@ const variantClass = props.variant ?? 'accent'
 }
 
 .button:hover {
-  background-color: #0b4572;
   transform: translateY(-2px);
 }
 
@@ -41,8 +40,17 @@ const variantClass = props.variant ?? 'accent'
   color: #fff;
 }
 
+.accent:hover {
+  background-color: #0f4a77; /* или твой цвет */
+  color: #fff;
+}
+
 .secondary {
   background-color: #f2f1f6;
   color: #77777c;
+}
+.secondary:hover {
+  background-color: #d2d1d3;
+  color: #ffffff;
 }
 </style>

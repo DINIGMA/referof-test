@@ -1,5 +1,5 @@
 <template>
-  <div class="promo-modal" @click.self="$emit('close-modal')">
+  <div class="promo-modal">
     <div class="promo-modal__content">
       <!-- Иконка закрытия формы -->
       <div class="close-icon">
@@ -20,7 +20,11 @@
 
         <!-- Форма -->
         <div class="promo-modal__form">
-          <component :is="currentStepComponent"></component>
+          <Transition name="slide-fade" mode="out-in">
+            <KeepAlive>
+              <component :is="currentStepComponent" @next-step="nextStep" @prev-step="prevStep" />
+            </KeepAlive>
+          </Transition>
         </div>
       </div>
     </div>
@@ -39,9 +43,23 @@ defineEmits<{
 
 const step = ref<number>(1)
 
+const formStepOneData = ref({})
+const formStepTwoData = ref({})
+
 const currentStepComponent = computed(() =>
   step.value === 1 ? PromocodeStepOne : PromocodeStepTwo,
 )
+
+// добавить тип
+const nextStep = (data: any) => {
+  console.log(data)
+  formStepOneData.value = data
+  step.value = 2
+}
+
+const prevStep = () => {
+  step.value = 1
+}
 </script>
 
 <style scoped>
@@ -98,9 +116,11 @@ const currentStepComponent = computed(() =>
 .promo-modal__state-step.active::after {
   content: '';
   position: absolute;
+
   bottom: -1px;
   left: 0;
   height: 2px;
+
   width: 100%;
   background-color: #107fd1;
 }
@@ -110,7 +130,6 @@ const currentStepComponent = computed(() =>
 
   top: 10px;
   right: 10px;
-
   width: 24px;
   height: 24px;
 
